@@ -1,0 +1,6 @@
+div.buttons {
+    border: 1px solid violet;
+    display: flex;
+    flex-wrap: wrap;
+    width: 700px;
+}
