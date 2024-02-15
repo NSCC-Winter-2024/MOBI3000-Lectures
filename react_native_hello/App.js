@@ -1,12 +1,11 @@
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HappyScreen from "./HappyScreen";
-import SadScreen from "./SadScreen";
 import {AntDesign, FontAwesome} from "@expo/vector-icons";
+import MainScreen from "./MainScreen";
+import SadScreen from "./SadScreen";
+import SayingsProvider from "./SayingsProvider";
 
-const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -19,22 +18,24 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator initialRouteName="Happy">
-        <Tab.Screen name="Happy" component={HappyScreen}
-                    options={{
-                      tabBarLabel: "Main",
-                      tabBarIcon: ({focused, color, size}) =>
-                        showHappyIcon(focused, color, size)
-                    }} />
-        <Tab.Screen name="Sad" component={SadScreen}
-                    options={{
-                      tabBarLabel: "Settings",
-                      tabBarIcon: ({focused, color, size}) =>
-                        <FontAwesome name="gear" size={size} color={color}/>,
-                    }}/>
-      </Tab.Navigator>
-    </NavigationContainer>
+    <SayingsProvider>
+      <NavigationContainer>
+        <Tab.Navigator initialRouteName="Happy">
+          <Tab.Screen name="Main" component={MainScreen}
+                      options={{
+                        tabBarLabel: "Main",
+                        tabBarIcon: ({focused, color, size}) =>
+                          showHappyIcon(focused, color, size)
+                      }}/>
+          <Tab.Screen name="Sad" component={SadScreen}
+                      options={{
+                        tabBarLabel: "Settings",
+                        tabBarIcon: ({focused, color, size}) =>
+                          <FontAwesome name="gear" size={size} color={color}/>,
+                      }}/>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </SayingsProvider>
   )
 }
 
