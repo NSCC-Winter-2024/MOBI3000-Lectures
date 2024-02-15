@@ -1,19 +1,14 @@
 import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
 import {useContext, useEffect, useState} from "react";
-import {SayingsContext} from "./SayingsProvider";
+import {defaultSayings, SayingsContext} from "./SayingsProvider";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SadScreen() {
 
-  const {birthday, setBirthday, valentines, setValentines} = useContext(SayingsContext);
+  const {sayings, setSayings} = useContext(SayingsContext);
 
   const handleSavePress = () => {
-    AsyncStorage.setItem('birthday', birthday)
-      .then()
-      .catch((reason) => {
-        alert(reason.message);
-      });
-    AsyncStorage.setItem('valentines', valentines)
+    AsyncStorage.setItem('sayings', JSON.stringify(sayings))
       .then()
       .catch((reason) => {
         alert(reason.message);
@@ -21,16 +16,17 @@ export default function SadScreen() {
     alert("Saved Successfully!");
   }
 
-
   return (
     <View>
       <View style={styles.container}>
         <Text>Birthday Saying</Text>
-        <TextInput style={styles.input} value={birthday} onChangeText={setBirthday} />
+        <TextInput style={styles.input} value={sayings.birthday ?? defaultSayings.birthday}
+                   onChangeText={(text) => setSayings({...sayings, birthday: text})} />
       </View>
       <View style={styles.container}>
         <Text>Valentines Saying</Text>
-        <TextInput style={styles.input} value={valentines} onChangeText={setValentines} />
+        <TextInput style={styles.input} value={sayings.valentines ?? defaultSayings.valentines }
+                   onChangeText={(text) => setSayings({...sayings, valentines: text})} />
       </View>
       <View style={styles.button}>
         <Button title="Save" onPress={handleSavePress} />

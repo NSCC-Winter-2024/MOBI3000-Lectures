@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import {Button, Pressable, StyleSheet, Text, View} from 'react-native';
 import { useFonts } from 'expo-font';
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import { AntDesign } from '@expo/vector-icons';
 import {HelloScreen} from "./HelloScreen";
 import {SayingsContext} from "./SayingsProvider";
@@ -10,16 +10,20 @@ export default function HappyScreen({navigation}) {
   const [fontsLoaded] = useFonts({
     'Inter-Black': require('./assets/fonts/Inter-Black.otf'),
   });
-  const {birthday, valentines} = useContext(SayingsContext);
+  const {sayings} = useContext(SayingsContext);
 
-  const [text, setText] = useState(birthday);
+  const [text, setText] = useState(sayings.birthday);
 
   const buttonPress = () => {
     navigation.navigate('Hello');
   };
   const squarePress = () => {
-    setText(valentines);
+    setText(sayings.valentines);
   };
+
+  useEffect(() => {
+    setText(sayings.birthday);
+  }, [sayings]);
 
   const showText = () => {
     if (fontsLoaded)

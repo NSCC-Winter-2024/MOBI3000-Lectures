@@ -3,20 +3,29 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const SayingsContext = createContext(null);
 
+export const defaultSayings = {
+  birthday: "Happy Birthday!",
+  valentines: "Happy Valentines!"
+}
+
 export default function SayingsProvider({children}) {
 
-  const [birthday, setBirthday] = useState("Happy Birthday!");
-  const [valentines, setValentines] = useState("Happy Valentines!");
+  const [sayings, setSayings] = useState(defaultSayings);
 
   useEffect(() => {
-    AsyncStorage.getItem('birthday')
-      .then((value) => setBirthday(value));
-    AsyncStorage.getItem('valentines')
-      .then((value) => setValentines(value));
+    AsyncStorage.getItem('sayings')
+      .then((json) => {
+        if (json !== null) {
+          console.log(`json: ${json}`);
+          const obj = JSON.parse(json);
+          console.log(`obj: ${obj}`);
+          setSayings(obj);
+        }
+      });
   }, []);
 
   return (
-    <SayingsContext.Provider value={{birthday, setBirthday, valentines, setValentines}}>
+    <SayingsContext.Provider value={{sayings, setSayings}}>
       {children}
     </SayingsContext.Provider>
   )
