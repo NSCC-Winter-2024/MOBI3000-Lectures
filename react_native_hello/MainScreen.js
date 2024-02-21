@@ -8,7 +8,8 @@ export default function MainScreen({birthday, valentines}) {
   return (
     <Stack.Navigator initialRouteName="Happy">
       <Stack.Screen name="Happy">
-        {() => <HappyScreen birthday={birthday} valentines={valentines} />}
+        {(options) =>
+          <HappyScreen {...options} birthday={birthday} valentines={valentines} />}
       </Stack.Screen>
       <Stack.Screen name="Hello" component={HelloScreen} />
     </Stack.Navigator>

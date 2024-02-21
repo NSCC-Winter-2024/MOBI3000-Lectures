@@ -20,7 +20,7 @@ export default function App() {
   return (
     <SayingsProvider>
       <NavigationContainer>
-        <Tab.Navigator initialRouteName="Happy">
+        <Tab.Navigator initialRouteName="Main">
           <Tab.Screen name="Main" component={MainScreen}
                       options={{
                         tabBarLabel: "Main",
