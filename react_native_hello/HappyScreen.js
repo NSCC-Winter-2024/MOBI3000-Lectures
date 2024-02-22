@@ -5,6 +5,7 @@ import {useContext, useEffect, useState} from "react";
 import { AntDesign } from '@expo/vector-icons';
 import {HelloScreen} from "./HelloScreen";
 import {SayingsContext} from "./SayingsProvider";
+import axios from "axios";
 
 export default function HappyScreen({navigation}) {
   const [fontsLoaded] = useFonts({
@@ -15,7 +16,11 @@ export default function HappyScreen({navigation}) {
   const [text, setText] = useState(sayings.birthday);
 
   const buttonPress = () => {
-    navigation.navigate('Hello');
+    //navigation.navigate('Hello');
+    axios.get("http://172.16.136.102/gpio/26/on")
+      .then((res) => {
+        setText(`LED: ${res.data.cmd}`);
+      });
   };
   const squarePress = () => {
     setText(sayings.valentines);

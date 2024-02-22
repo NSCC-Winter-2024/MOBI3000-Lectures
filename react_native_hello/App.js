@@ -5,6 +5,7 @@ import {AntDesign, FontAwesome} from "@expo/vector-icons";
 import MainScreen from "./MainScreen";
 import SadScreen from "./SadScreen";
 import SayingsProvider from "./SayingsProvider";
+import BrowserScreen from "./BrowserScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,6 +28,7 @@ export default function App() {
                         tabBarIcon: ({focused, color, size}) =>
                           showHappyIcon(focused, color, size)
                       }}/>
+          <Tab.Screen name="Browser" component={BrowserScreen} />
           <Tab.Screen name="Sad" component={SadScreen}
                       options={{
                         tabBarLabel: "Settings",
